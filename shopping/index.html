@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>家电</title>
+    <link rel="shortcut icon" href="favicon.ico">
+  <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/main.css">
+    
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+    
+	<style type="text/css">
+		* {
+			margin:0;
+			padding:0;
+		}
+		li{
+				list-style:none;
+			}
+			#banner{
+				width:730px;
+				height:454px;
+				margin:50px auto;
+				position:relative;
+			}
+			#banner .pic{
+	width: 100%;
+	height: 100%;
+	position: relative;
+			}
+			#banner .pic ul li{
+				position:absolute;
+				display:none;
+			}
+			#banner .tab{
+				width:148px;
+				height:20px;
+				position:absolute;
+				bottom:10px;
+				left:50%;
+				margin-left:-70px;
+			}
+			#banner .tab ul li{
+				width:18px;
+				height:18px;
+				background:#666;
+				border-radius:100%;
+				float:left;
+				margin:1px 3px;
+				color:#fff;
+				text-align:center;
+				line-height:18px;
+				font-family:'Microsoft yahei';
+				font-size:12px;
+				cursor:pointer;
+			}
+			#banner .tab ul li.on{
+				background:#f60;
+			}
+			#banner .btn{
+				display:none;
+			}
+			#banner .btn div{
+				width:30px;
+				height:60px;
+				background:rgba(0,0,0,0.3);
+				text-align:center;
+				line-height:60px;
+				color:#fff;
+				font-size:24px;
+				position:absolute;
+				top:50%;
+				margin-top:-30px;
+				cursor:pointer;
+			}
+			#leftBtn{
+				left:0;
+			}
+			#rightBtn{
+				right:0;
+			}
+			
+		body {
+			font-family:'microsoft yahei';
+			overflow:hidden;
+			background:#fff;
+		}
+		.w {
+			width:1200px;
+			margin:0 auto;
+		}
+		a {
+			text-decoration:inherit;
+		}
+		a,li {
+			list-style:none;
+		}
+		.cf:before,.cf:after,.clearfix:before,.clearfix:after {
+			content:"";
+			display:table;
+		}
+		.cf:after,.clearfix:after {
+			clear:both;
+		}
+		.cf,.clearfix {
+			clear:both;
+			*zoom:1;
+		}
+		/*导航条*/
+		#nav {
+	width: 100%;
+	min-width: 1200px;
+	height: 30px;
+	background: #00a1ea;
+	margin-top: 0px;
+		}
+		#nav ul li {
+			float:left;
+		}
+		#nav ul li:first-child {
+			margin-left:17%;
+		}
+		#nav ul li a {
+			font-size:16px;
+			color:#fff;
+			line-height:30px;
+			padding:0 35px;
+			display:inline-block;
+		}
+		#nav ul li a:hover {
+			background:#fff000;
+			color:#00a1ea;
+		}
+		#nav ul li.active a {
+			background:#fff000;
+			color:#00a1ea;
+		}
+		
+		#nav .search-box {
+	             float: left;
+	             padding-top: 3px;
+                  }
+
+            #nav .search-box .search-url {
+	             width: 175px;
+	             height: 24px;
+	             line-height: 24px;
+	             border: 1px solid blue;
+	             color: #d1d1d1;
+	             padding-left: 5px;
+                   }
+
+            #nav .search-box .search-btn {
+	              width: 60px;
+	              height: 26px;
+	              line-height: 26px;
+	              color: #fff;
+                  background: blue;
+	              border: none;
+	              border-radius: 3px;
+	              font-size: 14px;
+	              text-align: center;
+                  }
+			
+		/*banner上面浮层*/
+		.cat_wrap {
+			box-shadow:1px 1px 2px #bfbcbc;
+			box-shadow:0 -4px 8px 0 rgba(7,17,27,.1),0 4px 8px 0 rgba(7,17,27,.1);
+			background:#fff;
+			width:180px;
+			position:absolute;
+			z-index:999;
+			top:-30px;
+		}
+		.cat_wrap .cat_title {
+			width:192px;
+			height:50px;
+			line-height:50px;
+			font-size:16px;
+			background:url(i/juxing.png) no-repeat;
+			margin-left:-6px;
+			margin-top:-15px;
+			background-size:100%;
+			color:#fff;
+			text-align:center;
+		}
+		.cat_wrap .cat_header {
+			min-height:450px;
+		}
+		.cat_wrap .cat_list div {
+			background:#fff;
+			border-left:3px solid transparent;
+		}
+		.cat_wrap .cat_list div li {
+			float:left;
+			color:#323232;
+			font-size:14px;
+			margin:7px 0px;
+		}
+		.cat_wrap .cat_list div li:first-child {
+			margin-left:15px;
+			margin-right:10px;
+		}
+		.cat_wrap .cat_list {
+			cursor:pointer;
+		}
+		.cat_wrap .cat_list div.active {
+			width:177px;
+			padding-left:1px;
+			position:relative;
+			z-index:999;
+			border-left:3px solid #00a1ea;
+			border-top:1px solid #00a1ea;
+			border-bottom:1px solid #00a1ea;
+			border-right:none;
+		}
+		/*banner浮层滑动显示弹框*/
+				.cat_subcont {
+			display:none;
+		}
+		.cat_subcont.active {
+			display:block;
+		}
+		.cat_subcont .cat_sublist {
+			position:absolute;
+			z-index:998;
+			top:30px;
+			left:180px;
+			padding-top:5px;
+			min-height:394px;
+			width:740px;
+			background:#fff;
+			border-top:1px solid #f9f9f9;
+			border-left:1px solid #00a1ea;
+			border-bottom:1px solid #00a1ea;
+			border-right:1px solid #00a1ea;
+		}
+		.cat_subcont .cat_sublist .fore1 {
+			width:740px;
+		}
+		.cat_subcont .cat_sublist .fore1 .fore_list {
+			padding:0 20px;
+		}
+		.cat_subcont .cat_sublist .fore1 .fore_list h3 {
+			padding:5px;
+			border-bottom:1px solid #d3d3d3;
+		}
+		.cat_subcont .cat_sublist .fore1 .fore_list h3 a {
+			font-size:14px;
+			color:#00a1ea;
+		}
+		.cat_subcont .cat_sublist .fore1 .fore_list li {
+			float:left;
+			padding:5px;
+		}
+		.cat_subcont .cat_sublist .fore1 .fore_list li a {
+			font-size:12px;
+			color:#333;
+		}
+		.cat_subcont .cat_sublist .fore1 .fore_list li a:hover {
+			color:#00a1ea;
+			text-decoration:underline;
+		}
+
+	</style>
+</head>
+<body>
+<!-- 顶部区域 -->
+  <header>
+    <!-- 通栏菜单 -->
+    <div class="topbar hidden-sm hidden-xs">
+      <div class="container">
+        <div class="row">
+          <div class="tb-1 col-md-2">
+            <a href="#" class="text-muted">
+              <i class="icon-mobilephone"></i>
+              <span>微金所</span>
+              <i class="glyphicon glyphicon-chevron-down"></i>
+              <img src="img/c_06.jpg" alt="扫一扫">
+            </a>
+          </div>
+          <div class="tb-2 col-md-5 text-center text-muted">
+            <i class="icon-telephone"></i><span>4006-89-4006（服务时间：9:00-21:00）</span>
+          </div>
+          <div class="tb-3 col-md-2 text-center">
+            <a href="#" class="text-muted">常见问题</a>
+            <a href="#" class="text-muted">我的订单</a>
+          </div>
+          <div class="tb-4 col-md-3 text-center">
+           
+            <a href="#" class="btn btn-register btn-sm" data-toggle="modal" data-target=".modal">登录</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /通栏菜单 -->
+    <!-- 导航菜单 --><!-- /导航菜单 -->
+  </header>
+
+  
+  <!-- 登录对话框 -->
+  <div class="modal fade">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">欢迎登录哈哈哈</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Remember me
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Sign in</button>
+              </div>
+            </div>
+          </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+
+
+
+<div id="nav">
+        <ul class="w">
+            <li class="active"><a href="file:///C:/Users/15616/Desktop/新建文件夹%20(2)/三只松鼠/index.html#">首页</a></li>
+            <li><a href="#">智能生活</a></li>
+            <li><a href="#">厨卫大电</a></li>
+            <li><a href="#">空调冰箱</a></li>
+            <li><a href="#">电视洗衣机</a></li>
+            <li><a href="#">生活电器</a></li>
+        </ul>
+  <div class="search-box">
+					<form action="">
+						<input name="url" class="search-url" value="华硕电脑" type="text">&nbsp;
+						<input name="" class="search-btn" value="查询" type="submit">
+					</form>
+				</div>
+
+</div>
+<div class="w clearfix" style="position:relative;">
+        <!-- banner上面浮层 -->
+        <div class="cat_wrap">
+            <div class="cat_header">
+                <h3 class="cat_title">全部</h3>
+                <div class="cat_list">
+                    <div class="float for1">
+                        <ul class="clearfix">
+                            <li>手机</li>
+                            <li>数码</li>
+                        </ul>
+                    </div>
+                    <div class="float for2">
+                        <ul class="clearfix">
+                            <li>电脑</li>
+                            <li>办公</li>
+                        </ul>
+                    </div>
+                    <div class="float for3">
+                        <ul class="clearfix">
+                            <li>平板电视</li>
+                            <li>家庭影音</li>
+                        </ul>
+                    </div> 
+                    <div class="float for4">
+                        <ul class="clearfix">
+                            <li>对开门冰箱</li>
+                            <li>洗烘一体机</li>
+                        </ul>
+                    </div> 
+                    <div class="float for5">
+                        <ul class="clearfix">
+                            <li>壁挂式空调</li>
+                            <li>立柜式空调</li>
+                        </ul>
+                    </div> 
+                    <div class="float for6">
+                        <ul class="clearfix">
+                            <li>热水器</li>
+                            <li>烘干机</li>
+                        </ul>
+                    </div> 
+                    <div class="float for7">
+                        <ul class="clearfix">
+                            <li>手机</li>
+                            <li>老人机</li>
+                        </ul>
+                    </div>
+                    <div class="float for8">
+                        <ul class="clearfix">
+                            <li>吸尘器</li>
+                            <li>净化除醛</li>
+                        </ul>
+                    </div>
+                    <div class="float for9">
+                        <ul class="clearfix">
+                            <li>电动剃须刀</li>
+                            <li>调动牙刷</li>
+                        </ul>
+                    </div> 
+                    <div class="float for9">
+                        <ul class="clearfix">
+                            <li>电饭煲</li>
+                            <li>电吹风</li>
+                        </ul>
+                    </div> 
+                </div>
+            </div>
+            <!-- banner浮层滑动显示弹框 -->
+            <div class="cat_subcont">
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">苹果</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">h华为</a></li>
+                                <li><a href="javascript:void(0);">荣耀</a></li>
+                                <li><a href="javascript:void(0);">OPPO</a></li>
+                                <li><a href="javascript:void(0);">小米</a></li>
+                                <li><a href="javascript:void(0);">vivo</a></li>
+                            </ul>
+                        </div>
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">华硕</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">惠普</a></li>
+                                <li><a href="javascript:void(0);">戴尔</a></li>
+                                <li><a href="javascript:void(0);">联想</a></li>
+                                <li><a href="javascript:void(0);">小米</a></li>
+                                <li><a href="javascript:void(0);">华为</a></li>
+                                <li><a href="javascript:void(0);">荣耀</a></li>
+                                <li><a href="javascript:void(0);">苹果</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">智能手机</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">小米</a></li>
+                                <li><a href="javascript:void(0);">苹果</a></li>
+                                <li><a href="javascript:void(0);">TCL</a></li>
+                                <li><a href="javascript:void(0);">联想</a></li>
+                                <li><a href="javascript:void(0);">海尔</a></li>
+                            </ul>
+                        </div>
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">麦克风</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">容声对开门冰箱</a></li>
+                                <li><a href="javascript:void(0);">海尔洗衣机</a></li>
+                                <li><a href="javascript:void(0);">海尔冰箱</a></li>
+                                <li><a href="javascript:void(0);">洗烘一体机</a></li>
+                                <li><a href="javascript:void(0);">天鹅冰箱</a></li>
+                                <li><a href="javascript:void(0);">冷冻箱</a></li>
+                                <li><a href="javascript:void(0);">保鲜冰箱</a></li>
+                            </ul>
+                        </div>
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">壁挂式空调</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">美的空调</a></li>
+                                <li><a href="javascript:void(0);">格力空调</a></li>
+                                <li><a href="javascript:void(0);">中央空调</a></li>
+                                <li><a href="javascript:void(0);"></a></li>
+                                <li><a href="javascript:void(0);">中央空调1</a></li>
+                                <li><a href="javascript:void(0);">中央空调2</a></li>
+                                <li><a href="javascript:void(0);">中央空调3</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">热水器</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">美的热水器</a></li>
+                                <li><a href="javascript:void(0);">爱华饮水机</a></li>
+                              <li><a href="javascript:void(0);">隔离烘干机</a></li>
+                                <li><a href="javascript:void(0);">海尔热水器</a></li>
+                                <li><a href="javascript:void(0);">小熊烘干机</a></li>
+                            </ul>
+                        </div>
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">老人机</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">小天才智能手表</a></li>
+                                <li><a href="javascript:void(0);">诺基亚老人机</a></li>
+                                <li><a href="javascript:void(0);">三星老人机</a></li>
+                                <li><a href="javascript:void(0);">木星老人机</a></li>
+                                <li><a href="javascript:void(0);">爱华老人机</a></li>
+                                <li><a href="javascript:void(0);">松田老人机</a></li>
+                                <li><a href="javascript:void(0);">坚果老人机</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">吸尘器</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">海尔吸尘器</a></li>
+                                <li><a href="javascript:void(0);">松下吸尘器</a></li>
+                                <li><a href="javascript:void(0);">除醛器</a></li>
+                                <li><a href="javascript:void(0);">空气清新器</a></li>
+                                <li><a href="javascript:void(0);">加湿器</a></li>
+                            </ul>
+                        </div>
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">电动牙刷</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">菲薄剃须刀</a></li>
+                                <li><a href="javascript:void(0);">康夫剃须刀</a></li>
+                                <li><a href="javascript:void(0);">爱华电动牙刷</a></li>
+                                <li><a href="javascript:void(0);">小熊电动牙刷</a></li>
+                                <li><a href="javascript:void(0);">汇锦剃须刀</a></li>
+                                <li><a href="javascript:void(0);">克比牙刷</a></li>
+                                <li><a href="javascript:void(0);">飞科剃须刀</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">电饭煲</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">美的电饭煲</a></li>
+                                <li><a href="javascript:void(0);">苏泊尔电饭煲</a></li>
+                                <li><a href="javascript:void(0);">小熊养生壶</a></li>
+                                <li><a href="javascript:void(0);">优雪电饭煲</a></li>
+                                <li><a href="javascript:void(0);">康夫电吹风</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">麦克风</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">容声对开门冰箱</a></li>
+                                <li><a href="javascript:void(0);">海尔洗衣机</a></li>
+                                <li><a href="javascript:void(0);">海尔冰箱</a></li>
+                                <li><a href="javascript:void(0);">洗烘一体机</a></li>
+                                <li><a href="javascript:void(0);">天鹅冰箱</a></li>
+                                <li><a href="javascript:void(0);">冷冻箱</a></li>
+                          <li><a href="javascript:void(0);">保鲜冰箱</a></li>          </ul>
+                        </div>
+                      <div class="fore_list">
+                            <h3><a href="javascript:void(0);">麦克风</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">容声对开门冰箱</a></li>
+                                <li><a href="javascript:void(0);">海尔洗衣机</a></li>
+                                <li><a href="javascript:void(0);">海尔冰箱</a></li>
+                                <li><a href="javascript:void(0);">洗烘一体机</a></li>
+                                <li><a href="javascript:void(0);">天鹅冰箱</a></li>
+                                <li><a href="javascript:void(0);">冷冻箱</a></li>
+                                <li><a href="javascript:void(0);">保鲜冰箱</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">麦克风</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">容声对开门冰箱</a></li>
+                                <li><a href="javascript:void(0);">海尔洗衣机</a></li>
+                                <li><a href="javascript:void(0);">海尔冰箱</a></li>
+                                <li><a href="javascript:void(0);">洗烘一体机</a></li>
+                                <li><a href="javascript:void(0);">天鹅冰箱</a></li>
+                                <li><a href="javascript:void(0);">冷冻箱</a></li>
+                                <li><a href="javascript:void(0);">保鲜冰箱</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                      <div class="fore_list">
+                            <h3><a href="javascript:void(0);">麦克风</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">容声对开门冰箱</a></li>
+                                <li><a href="javascript:void(0);">海尔洗衣机</a></li>
+                                <li><a href="javascript:void(0);">海尔冰箱</a></li>
+                                <li><a href="javascript:void(0);">洗烘一体机</a></li>
+                                <li><a href="javascript:void(0);">天鹅冰箱</a></li>
+                                <li><a href="javascript:void(0);">冷冻箱</a></li>
+                                <li><a href="javascript:void(0);">保鲜冰箱</a></li>
+                            </ul>
+                        </div>
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">麦克风</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">容声对开门冰箱</a></li>
+                                <li><a href="javascript:void(0);">海尔洗衣机</a></li>
+                                <li><a href="javascript:void(0);">海尔冰箱</a></li>
+                                <li><a href="javascript:void(0);">洗烘一体机</a></li>
+                                <li><a href="javascript:void(0);">天鹅冰箱</a></li>
+                                <li><a href="javascript:void(0);">冷冻箱</a></li>
+                                <li><a href="javascript:void(0);">保鲜冰箱</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">云计算9</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">《云计算基础架构》</a></li>
+                                <li><a href="javascript:void(0);">《云平台》</a></li>
+                                <li><a href="javascript:void(0);">《大数据》</a></li>
+                                <li><a href="javascript:void(0);">《虚拟化技术》</a></li>
+                                <li><a href="javascript:void(0);">《云计算基础架构》</a></li>
+                            </ul>
+                        </div>
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">云计算9</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">《云计算基础架构》</a></li>
+                                <li><a href="javascript:void(0);">《云平台》</a></li>
+                                <li><a href="javascript:void(0);">《大数据》</a></li>
+                                <li><a href="javascript:void(0);">《虚拟化技术》</a></li>
+                                <li><a href="javascript:void(0);">《云计算基础架构》</a></li>
+                                <li><a href="javascript:void(0);">《云计算基础架构》</a></li>
+                                <li><a href="javascript:void(0);">《云计算基础架构》</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="cat_sublist">
+                    <!-- 浮层左边列表 -->
+                    <div class="fore1">
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">麦克风</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">容声对开门冰箱</a></li>
+                                <li><a href="javascript:void(0);">海尔洗衣机</a></li>
+                                <li><a href="javascript:void(0);">海尔冰箱</a></li>
+                                <li><a href="javascript:void(0);">洗烘一体机</a></li>
+                                <li><a href="javascript:void(0);">天鹅冰箱</a></li>
+                                <li><a href="javascript:void(0);">冷冻箱</a></li>
+                                <li><a href="javascript:void(0);">保鲜冰箱</a></li>
+                            </ul>
+                        </div>
+                        <div class="fore_list">
+                            <h3><a href="javascript:void(0);">麦克风</a></h3>
+                            <ul class="clearfix">
+                                <li><a href="javascript:void(0);">容声对开门冰箱</a></li>
+                                <li><a href="javascript:void(0);">海尔洗衣机</a></li>
+                                <li><a href="javascript:void(0);">海尔冰箱</a></li>
+                                <li><a href="javascript:void(0);">洗烘一体机</a></li>
+                                <li><a href="javascript:void(0);">天鹅冰箱</a></li>
+                                <li><a href="javascript:void(0);">冷冻箱</a></li>
+                                <li><a href="javascript:void(0);">保鲜冰箱</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <p>
+      <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+    	//banner左侧内容栏
+		$(function(){
+		    var thisTime;
+		    //鼠标离开左侧内容栏
+		    $('.cat_wrap .cat_list .float').mouseleave(function(even){
+		        thisTime = setTimeout(thisMouseOut,1000);
+		    });
+		    //鼠标点击左侧内容栏   滑动出弹层
+		    $('.cat_wrap .cat_list .float').mouseenter(function(){
+		        $(this).addClass("active").siblings().removeClass("active");
+		        clearTimeout(thisTime);
+		        var thisUB = $('.cat_wrap .cat_list .float').index($(this));
+		        if($.trim($('.cat_subcont .cat_sublist').eq(thisUB).html()) != ""){
+		            $('.cat_subcont').addClass('active');
+		            $('.cat_sublist').hide();
+		            $('.cat_sublist').eq(thisUB).show();
+		        }else{
+		            $('.cat_subcont').removeClass('active');
+		        }
+		    });
+		    //函数——执行鼠标离开左侧内容栏的动作
+		    function thisMouseOut(){
+		        $('.cat_subcont').removeClass('active');
+		        $('.cat_wrap .cat_list .float').removeClass('active');
+		    }
+		    $('.cat_subcont').mouseenter(function(){
+		        clearTimeout(thisTime);
+		        $('.cat_subcont').addClass('active');
+		    });
+		    $('.cat_subcont').mouseleave(function(){
+		        $('.cat_subcont').removeClass('active');
+		        $('.cat_wrap .cat_list .float').removeClass('active');
+		    });
+		})</script></p>
+    
+    
+    
+      <div id="banner">
+			<div class="pic">
+				<ul>
+					<li style="display:block;"><a href=""><img src="img/1.jpg" width="731" height="464" /></a></li>
+					<li><a href=""><img src="img/2.jpg" width="731" height="464"/></a></li>
+					<li><a href=""><img src="img/3.jpg" width="731" height="464"/></a></li>
+					<li><a href=""><img src="img/4.jpg" width="731" height="464"/></a></li>
+					<li><a href=""><img src="img/5.jpg" width="731" height="464"/></a></li>
+					<li><a href=""><img src="img/6.jpg" width="731" height="464"/></a></li>
+				</ul>
+			</div>
+
+			<div class="tab">
+				<ul>
+					<li class="on">1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+				</ul>
+			</div>
+
+			<div class="btn">
+				<div id="leftBtn">&lt;</div>
+				<div id="rightBtn">&gt;</div>
+			</div
+		></div> 
+
+		<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			
+			var $tabLi = $('#banner .tab li');
+			var $picLi = $('#banner .pic li');
+			var $btn = $('#banner .btn');
+			var $btnDiv = $('#banner .btn div');
+			var $banner = $('#banner');
+			var index = 0;
+			var timer;
+
+			$tabLi.hover(function(){
+				index = $(this).index();
+				fn();
+			});
+
+			$banner.hover(function(){
+				$btn.show();
+				clearInterval(timer);
+			},function(){
+				$btn.hide();
+				auto();
+			});
+
+			$btnDiv.click(function(){
+				var i = $(this).index();
+				if ( i )
+				{
+					index ++;
+					index %= $tabLi.length;
+				}
+				else
+				{
+					index --;
+					if(index<0)index = $tabLi.length-1;
+				}
+				fn();
+			}).mousedown(function(){
+				return false;
+			});
+			
+			auto();
+			function auto(){
+				timer = setInterval(function(){
+					index ++;
+					index %= $tabLi.length;
+					fn();
+				},5000);
+			}
+			function fn(){
+				$tabLi.eq(index).addClass('on').siblings().removeClass('on');
+				$picLi.eq(index).stop(true).fadeIn().siblings().stop(true).fadeOut();
+			}
+		});
+		</script>
+     
+<script src="js/jquery-2.0.3.min.js" type="text/javascript"></script>	
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+
+	$(".side ul li").hover(function(){
+
+		$(this).find(".sidebox").stop().animate({"width":"124px"},200).css({"opacity":"1","filter":"Alpha(opacity=100)","background":"#ae1c1c"})	
+
+	},function(){
+
+		$(this).find(".sidebox").stop().animate({"width":"54px"},200).css({"opacity":"0.8","filter":"Alpha(opacity=80)","background":"#000"})	
+
+	});
+
+	
+
+});
+
+
+
+//回到顶部
+
+function goTop(){
+
+	$('html,body').animate({'scrollTop':0},600);
+
+}
+
+</script>
+
+
+
+
+
+<div style="height:1000px;">		<div class="pro_recommend">
+		  <h2>保险产品推荐</h2>
+			<ul>
+				<li>
+					<a href="#" class="goods-li-a">
+						<img class="item-img" src="img/pic_p01.jpg">
+						<div class="item-text">
+							<strong>安享康健2018</strong>
+							<p>保120种疾病<br>赔付最高可达116万</p>
+							<span>查看详情</span>
+						</div>
+						<i class="i-p-hot"></i>
+					</a>
+			  </li>
+				<li>
+					<a href="#" class="goods-li-a">
+						<img class="item-img" src="img/pic_p02.jpg">
+						<div class="item-text">
+							<strong>醇享人生个人高端医疗保险</strong>
+							<p>最高年保额可达800万<br>不限医保范围的高端医疗</p>
+							<span>查看详情</span>
+						</div>
+
+					</a>
+				</li>
+				<li>
+					<a href="#" class="goods-li-a">
+						<img class="item-img" src="img/pic_p03.jpg">
+						<div class="item-text">
+							<strong>儿童综合保障</strong>
+							<p>教育+大病+住院+意外<br> 4合1全面保障</p>
+							<span>查看详情</span>
+						</div>
+						<i class="i-p-new"></i>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="goods-li-a">
+						<img class="item-img" src="img/pic_p06.jpg">
+						<div class="item-text">
+							<strong>百万守护意外保障</strong>
+							<p>最高300万意外综合保障<br> 4合1全面保障</p>
+
+							<span>查看详情</span>
+						</div>
+
+					</a>
+				</li>
+				<li>
+					<a href="#" class="goods-li-a">
+						<img class="item-img" src="img/pic_p04.jpg">
+						<div class="item-text">
+							<strong>免费领20万意外险</strong>
+							<p>日常出行的保护伞</p>
+							<span>免费领取</span>
+						</div>
+						<i class="i-p-free"></i>
+
+					</a>
+				</li>
+				<li>
+					<a href="#" class="goods-li-a">
+						<img class="item-img" src="img/pic_p05.jpg">
+						<div class="item-text">
+							<strong>中老年防癌险</strong>
+							<p>给父母更多的关爱</p>
+
+							<span>查看详情</span>
+						</div>
+
+					</a>
+				</li>
+		  </ul>
+  </div>
+		
+
+
+
+</div>  
+        </div>
+
+
+
+<div class="side">
+
+	<ul>
+	  <li>
+	    <div class="sidebox"><a href="#"><img src="img/side_icon02.png">频道广场</a></div>
+      </li>
+
+		
+
+		<li><a href="javascript:void(0);" ><div class="sidebox"><img src="img/side_icon04.png">QQ客服</div></a></li>
+	  <li><a href="#">
+		  <div class="sidebox"><img src="img/side_icon01.png">客服中心</div>
+		  </a></li>
+
+		<li><a href="javascript:void(0);" ><div class="sidebox"><img src="img/side_icon03.png">新浪微博</div></a></li>
+
+		<li style="border:none;"><a href="javascript:goTop();" class="sidetop"><img src="img/side_icon05.png"></a></li>
+
+	</ul>
+	<div style="height: 50px;">
+			<!--填充高度可删除-->
+  </div>		
+		
+
+        
+</body>
+
+<script src="lib/jquery/jquery.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.js"></script>
+  <script src="js/main.js"></script>
+  
+</html>
